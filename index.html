@@ -9,10 +9,10 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Google Fonts: Cairo for Arabic, Orbitron for futuristic English accents -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@100..900&family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <script>
       tailwind.config = {
@@ -20,27 +20,25 @@
           extend: {
             colors: {
               brand: {
-                DEFAULT: '#00d2aa', // Approximate teal from logo
-                dark: '#00a384',
-                glow: '#00ffcc',
-                accent: '#006655',
+                DEFAULT: '#00E699', // Vibrant Green
+                dark: '#00B377',
+                light: '#D1FAE5',
               },
-              dark: {
-                900: '#050505',
-                800: '#0a0a0a',
-                700: '#121212',
-                card: '#161616'
+              slate: {
+                950: '#020617',
+                900: '#0F172A',
+                800: '#1E293B',
               }
             },
             fontFamily: {
-              sans: ['Cairo', 'sans-serif'],
-              futuristic: ['Orbitron', 'sans-serif'],
+              sans: ['Alexandria', 'sans-serif'],
+              futuristic: ['Chakra Petch', 'sans-serif'],
             },
             animation: {
               'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'float': 'float 6s ease-in-out infinite',
               'grid-move': 'gridMove 20s linear infinite',
-              'spin-slow': 'spin 10s linear infinite',
+              'spin-slow': 'spin 12s linear infinite',
             },
             keyframes: {
               float: {
@@ -53,7 +51,7 @@
               }
             },
             backgroundImage: {
-              'cyber-grid': "linear-gradient(to right, rgba(0, 210, 170, 0.1) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 210, 170, 0.1) 1px, transparent 1px)",
+              'cyber-grid': "linear-gradient(to right, rgba(0, 230, 153, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(0, 230, 153, 0.05) 1px, transparent 1px)",
             }
           },
         },
@@ -61,51 +59,32 @@
     </script>
     <style>
       body {
-        background-color: #050505;
-        color: #fff;
+        background-color: #020617; /* Dark Background */
+        color: #F8FAFC; /* Light Text */
         overflow-x: hidden;
       }
-      /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #0a0a0a;
+        background: #0F172A;
       }
       ::-webkit-scrollbar-thumb {
-        background: #00d2aa;
+        background: #00E699;
         border-radius: 4px;
       }
       ::-webkit-scrollbar-thumb:hover {
-        background: #00ffcc;
+        background: #00B377;
       }
       
       .perspective-container {
         perspective: 1000px;
       }
       
-      .text-sculpted {
-        text-shadow: 
-          0 1px 0 #ccc, 
-          0 2px 0 #c9c9c9, 
-          0 3px 0 #bbb, 
-          0 4px 0 #b9b9b9, 
-          0 5px 0 #aaa, 
-          0 6px 1px rgba(0,0,0,.1), 
-          0 0 5px rgba(0,0,0,.1), 
-          0 1px 3px rgba(0,0,0,.3), 
-          0 3px 5px rgba(0,0,0,.2), 
-          0 5px 10px rgba(0,0,0,.25), 
-          0 10px 10px rgba(0,0,0,.2), 
-          0 20px 20px rgba(0,0,0,.15);
-      }
-      
-      .text-glow-sculpt {
-        color: transparent;
-        background-clip: text;
+      .text-gradient-brand {
+        background: linear-gradient(135deg, #00E699 0%, #00B377 100%);
         -webkit-background-clip: text;
-        background-image: linear-gradient(180deg, #ffffff 0%, #b3b3b3 50%, #00d2aa 100%);
-        filter: drop-shadow(0 0 10px rgba(0, 210, 170, 0.3));
+        -webkit-text-fill-color: transparent;
       }
     </style>
   <script type="importmap">
@@ -115,7 +94,8 @@
     "react/": "https://esm.sh/react@^19.2.3/",
     "react": "https://esm.sh/react@^19.2.3",
     "react-dom/": "https://esm.sh/react-dom@^19.2.3/",
-    "lucide-react": "https://esm.sh/lucide-react@^0.562.0"
+    "lucide-react": "https://esm.sh/lucide-react@^0.562.0",
+    "@google/genai": "https://esm.sh/@google/genai@^1.35.0"
   }
 }
 </script>

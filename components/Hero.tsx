@@ -1,17 +1,20 @@
 import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { ArrowDown, Cpu, Sparkles, Binary } from 'lucide-react';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
+import { ArrowDown, Cpu, Sparkles } from 'lucide-react';
 import ParticleNetwork from './ParticleNetwork';
 
-const Hero: React.FC = () => {
+interface HeroProps {
+  onEnterLab?: () => void;
+}
+
+const Hero: React.FC<HeroProps> = ({ onEnterLab }) => {
   const cardRef = useRef<HTMLDivElement>(null);
 
-  // Motion values for 3D tilt effect
   const x = useMotionValue(0);
   const y = useMotionValue(0);
 
-  const rotateX = useTransform(y, [-100, 100], [15, -15]);
-  const rotateY = useTransform(x, [-100, 100], [-15, 15]);
+  const rotateX = useTransform(y, [-100, 100], [10, -10]); 
+  const rotateY = useTransform(x, [-100, 100], [-10, 10]);
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!cardRef.current) return;
@@ -19,12 +22,8 @@ const Hero: React.FC = () => {
     const centerX = rect.left + rect.width / 2;
     const centerY = rect.top + rect.height / 2;
     
-    // Calculate distance from center
-    const distanceX = e.clientX - centerX;
-    const distanceY = e.clientY - centerY;
-    
-    x.set(distanceX);
-    y.set(distanceY);
+    x.set(e.clientX - centerX);
+    y.set(e.clientY - centerY);
   };
 
   const handleMouseLeave = () => {
@@ -33,116 +32,106 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-dark-900 perspective-container">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-slate-950 perspective-container pt-16">
       
-      {/* Dynamic Background Layer */}
+      {/* Background Elements */}
       <div className="absolute inset-0 z-0">
         <ParticleNetwork />
         
-        {/* Animated Cyber Grid Floor */}
+        {/* Cyber Grid Floor */}
         <div className="absolute bottom-0 left-[-50%] right-[-50%] h-[50vh] transform perspective-[500px] rotate-x-[60deg] opacity-30 pointer-events-none">
-           <div className="w-full h-full bg-cyber-grid bg-[length:50px_50px] animate-grid-move shadow-[0_0_100px_rgba(0,210,170,0.2)]"></div>
+           <div className="w-full h-full bg-cyber-grid bg-[length:40px_40px] animate-grid-move"></div>
         </div>
         
-        {/* Radial Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-b from-dark-900/80 via-transparent to-dark-900 pointer-events-none"></div>
+        {/* Glow Gradients */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-brand/10 rounded-full blur-[120px] pointer-events-none animate-pulse-slow"></div>
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/5 rounded-full blur-[120px] pointer-events-none"></div>
       </div>
 
       {/* Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-4 flex flex-col items-center text-center">
         
-        {/* 3D Holographic Logo Container */}
+        {/* 3D Glass Card Container */}
         <motion.div
           ref={cardRef}
           style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
-          initial={{ opacity: 0, scale: 0.8, y: -50 }}
+          initial={{ opacity: 0, scale: 0.8, y: 50 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
-          transition={{ duration: 1, type: "spring" }}
-          className="relative mb-12 group perspective-1000"
+          transition={{ duration: 1.2, type: "spring", bounce: 0.3 }}
+          className="relative mb-12 group"
         >
-          {/* Outer Glow Ring */}
-          <div className="absolute -inset-10 bg-brand/20 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition duration-500 animate-pulse"></div>
+          {/* Neon Border Glow */}
+          <div className="absolute -inset-1 bg-gradient-to-r from-brand/50 to-blue-500/50 rounded-[2.5rem] blur-xl opacity-20 group-hover:opacity-60 transition duration-700"></div>
           
-          {/* The Card */}
-          <div className="relative w-72 h-72 md:w-96 md:h-96 bg-black/60 backdrop-blur-xl rounded-[2rem] border border-white/10 shadow-[0_0_50px_-10px_rgba(0,210,170,0.3)] flex items-center justify-center overflow-hidden transform-gpu">
+          {/* Dark Glass Card */}
+          <div className="relative w-64 h-64 md:w-80 md:h-80 bg-slate-900/40 backdrop-blur-2xl rounded-[2.5rem] border border-white/10 shadow-2xl flex flex-col items-center justify-center overflow-hidden transform-gpu">
             
-            {/* Animated Background inside Card */}
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,210,170,0.15),transparent_70%)] animate-pulse-slow"></div>
-            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent"></div>
             
-            {/* Rotating Ring */}
-            <div className="absolute w-[120%] h-[120%] border border-dashed border-brand/30 rounded-full animate-spin-slow"></div>
+            {/* Tech Ring */}
+            <div className="absolute w-[85%] h-[85%] border border-dashed border-brand/20 rounded-full animate-spin-slow"></div>
             
-            {/* Logo Image */}
-            <motion.img 
-              src="https://i.imgur.com/kS5x87J.jpeg" 
-              alt="Nyt oolibiloo Logo" 
-              className="relative z-10 w-56 md:w-72 h-auto object-contain mix-blend-screen drop-shadow-[0_0_20px_rgba(0,210,170,0.5)]"
-              style={{ transform: "translateZ(50px)" }} 
-            />
+            {/* Branding Text in Card */}
+            <motion.div 
+              className="relative z-10 flex flex-col items-center"
+              style={{ transform: "translateZ(50px)" }}
+            >
+              <h2 className="font-futuristic text-4xl md:text-5xl font-black text-white tracking-tighter mb-1">
+                NY<span className="text-brand">T</span>
+              </h2>
+              <p className="text-[10px] font-futuristic tracking-[0.4em] text-brand/80">OOLIBILOO</p>
+            </motion.div>
             
-            {/* Scanning Beam */}
-            <div className="absolute top-0 w-full h-1 bg-gradient-to-r from-transparent via-brand to-transparent opacity-50 blur-sm animate-[scan_3s_ease-in-out_infinite] top-[-10%]"></div>
+            <div className="absolute bottom-6 font-futuristic text-[8px] text-white/20 tracking-widest uppercase" style={{ transform: "translateZ(20px)" }}>
+              System Active 2026
+            </div>
           </div>
-          
-          {/* Reflected Shadow */}
-          <div className="absolute -bottom-12 left-1/2 -translate-x-1/2 w-3/4 h-8 bg-black blur-xl opacity-60 rounded-[100%]"></div>
         </motion.div>
 
-        {/* Sculpted Text Headline */}
-        <div className="relative mb-8">
-           <motion.h1 
-             initial={{ opacity: 0, y: 20 }}
-             animate={{ opacity: 1, y: 0 }}
-             transition={{ delay: 0.5 }}
-             className="text-6xl md:text-8xl font-black tracking-tight relative z-10"
-           >
-             <span className="text-glow-sculpt block md:inline">المستقبل</span>
-             <span className="mx-4 hidden md:inline text-brand/50">✦</span>
-             <span className="text-glow-sculpt block md:inline">يبدأ هنا</span>
-           </motion.h1>
-           
-           {/* Background echo text for depth */}
-           <h1 className="absolute top-1 left-1 w-full text-6xl md:text-8xl font-black tracking-tight text-brand/10 blur-[2px] z-0 select-none" aria-hidden="true">
-             <span className="block md:inline">المستقبل</span>
-             <span className="mx-4 hidden md:inline">✦</span>
-             <span className="block md:inline">يبدأ هنا</span>
-           </h1>
-        </div>
-
-        {/* Subtitle with typing effect concept */}
+        {/* Text Headline */}
         <motion.div 
+           initial={{ opacity: 0, y: 20 }}
+           animate={{ opacity: 1, y: 0 }}
+           transition={{ delay: 0.5 }}
+           className="mb-6"
+        >
+           <h1 className="text-5xl md:text-7xl font-black tracking-tighter text-white">
+             المستقبل <span className="text-brand">يبدأ هنا</span>
+           </h1>
+        </motion.div>
+
+        {/* Subtitle */}
+        <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-          className="relative px-6 py-3 bg-white/5 rounded-full border border-white/10 backdrop-blur-md mb-10 overflow-hidden"
+          transition={{ delay: 0.8 }}
+          className="text-lg md:text-xl text-slate-400 max-w-2xl mb-10 font-light"
         >
-          <div className="absolute top-0 left-0 h-full w-1 bg-brand animate-[scan_2s_infinite]"></div>
-          <p className="text-lg md:text-2xl text-gray-300 font-light dir-rtl">
-            استكشف الجيل القادم من الذكاء الاصطناعي والأتمتة الرقمية في عام <span className="font-futuristic font-bold text-brand text-2xl">2026</span>
-          </p>
-        </motion.div>
+          استكشف الجيل القادم من الذكاء الاصطناعي والأتمتة الرقمية مع <span className="text-brand font-futuristic">نبيل يوسف الطواحني</span>
+        </motion.p>
 
         {/* Buttons */}
         <motion.div 
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.4 }}
-          className="flex flex-col sm:flex-row gap-6 z-20"
+          transition={{ delay: 1.1 }}
+          className="flex flex-col sm:flex-row gap-4 z-20"
         >
-          <button className="group relative px-8 py-4 bg-brand text-black font-bold rounded-lg overflow-hidden transition-transform hover:scale-105 hover:shadow-[0_0_30px_rgba(0,210,170,0.6)]">
-            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
+          <button 
+            onClick={onEnterLab}
+            className="group relative px-10 py-4 bg-brand text-slate-950 text-sm font-bold rounded-full overflow-hidden transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(0,230,153,0.4)]"
+          >
             <span className="relative flex items-center gap-2">
-              <Cpu className="w-5 h-5" />
-              أطلق العنان للذكاء
+              <Sparkles className="w-4 h-4" />
+              دخول مختبر الإبداع
             </span>
           </button>
           
-          <button className="group px-8 py-4 bg-transparent border border-white/20 text-white font-bold rounded-lg hover:bg-white/5 hover:border-brand/50 transition-all flex items-center gap-2">
-            <Binary className="w-5 h-5 text-gray-400 group-hover:text-brand transition-colors" />
-            شاهد العرض التوضيحي
+          <button className="group px-10 py-4 bg-white/5 border border-white/10 text-white text-sm font-bold rounded-full hover:bg-white/10 transition-all flex items-center gap-2 backdrop-blur-md">
+            <Cpu className="w-4 h-4 text-brand" />
+            استعراض المشاريع
           </button>
         </motion.div>
 
@@ -152,11 +141,11 @@ const Hero: React.FC = () => {
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 1 }}
-        className="absolute bottom-10 animate-bounce cursor-pointer z-20"
+        transition={{ delay: 2, duration: 1 }}
+        className="absolute bottom-8 animate-bounce cursor-pointer z-20 text-brand/50"
         onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
       >
-        <ArrowDown className="text-brand w-8 h-8 drop-shadow-[0_0_10px_rgba(0,210,170,0.8)]" />
+        <ArrowDown className="w-6 h-6" />
       </motion.div>
     </section>
   );

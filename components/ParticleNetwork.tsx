@@ -13,9 +13,8 @@ const ParticleNetwork: React.FC = () => {
     let height = (canvas.height = window.innerHeight);
 
     const particles: Particle[] = [];
-    const particleCount = width > 768 ? 100 : 50; // Fewer particles on mobile
-    const connectionDistance = 150;
-    const mouse = { x: 0, y: 0 };
+    const particleCount = width > 768 ? 100 : 50; 
+    const connectionDistance = 120;
 
     class Particle {
       x: number;
@@ -27,16 +26,15 @@ const ParticleNetwork: React.FC = () => {
       constructor() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.size = Math.random() * 2 + 1;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.size = Math.random() * 2 + 0.5;
       }
 
       update() {
         this.x += this.vx;
         this.y += this.vy;
 
-        // Bounce off edges
         if (this.x < 0 || this.x > width) this.vx *= -1;
         if (this.y < 0 || this.y > height) this.vy *= -1;
       }
@@ -45,7 +43,7 @@ const ParticleNetwork: React.FC = () => {
         if (!ctx) return;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = '#00d2aa';
+        ctx.fillStyle = '#00E699';
         ctx.fill();
       }
     }
@@ -61,12 +59,10 @@ const ParticleNetwork: React.FC = () => {
       if (!ctx) return;
       ctx.clearRect(0, 0, width, height);
 
-      // Update and draw particles
       particles.forEach((p, index) => {
         p.update();
         p.draw();
 
-        // Connect particles
         for (let j = index + 1; j < particles.length; j++) {
           const p2 = particles[j];
           const dx = p.x - p2.x;
@@ -75,7 +71,7 @@ const ParticleNetwork: React.FC = () => {
 
           if (distance < connectionDistance) {
             ctx.beginPath();
-            ctx.strokeStyle = `rgba(0, 210, 170, ${1 - distance / connectionDistance})`;
+            ctx.strokeStyle = `rgba(0, 230, 153, ${0.15 - (distance / connectionDistance) * 0.15})`;
             ctx.lineWidth = 0.5;
             ctx.moveTo(p.x, p.y);
             ctx.lineTo(p2.x, p2.y);
@@ -105,7 +101,7 @@ const ParticleNetwork: React.FC = () => {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none"
+      className="absolute top-0 left-0 w-full h-full opacity-40 pointer-events-none"
     />
   );
 };

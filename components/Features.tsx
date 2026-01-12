@@ -4,64 +4,72 @@ import { Bot, BrainCircuit, Code2, Globe2, ShieldCheck, Zap } from 'lucide-react
 
 const features = [
   {
-    icon: <Bot className="w-10 h-10 text-brand" />,
+    icon: <Bot className="w-6 h-6" />,
     title: "أتمتة ذكية",
-    desc: "حلول أتمتة متقدمة تحاكي سير العمل البشري بدقة غير مسبوقة لتحقيق الكفاءة القصوى."
+    desc: "حلول أتمتة متقدمة تحاكي سير العمل البشري بدقة وكفاءة."
   },
   {
-    icon: <BrainCircuit className="w-10 h-10 text-purple-400" />,
+    icon: <BrainCircuit className="w-6 h-6" />,
     title: "الشبكات العصبية",
-    desc: "بناء وتدريب نماذج ذكاء اصطناعي قادرة على التعلم والتكيف مع التغيرات المستقبلية."
+    desc: "نماذج ذكاء اصطناعي قادرة على التعلم والتكيف المستمر."
   },
   {
-    icon: <Globe2 className="w-10 h-10 text-blue-400" />,
+    icon: <Globe2 className="w-6 h-6" />,
     title: "الويب 3.0",
-    desc: "تطوير تطبيقات لا مركزية تواكب عصر الميتافيرس والإنترنت الجديد."
+    desc: "تطبيقات لا مركزية تواكب عصر الميتافيرس الجديد."
   },
   {
-    icon: <Zap className="w-10 h-10 text-yellow-400" />,
+    icon: <Zap className="w-6 h-6" />,
     title: "سرعة فائقة",
-    desc: "بنية تحتية رقمية مصممة للعمل في الوقت الفعلي بأقل زمن استجابة ممكن."
+    desc: "بنية تحتية رقمية تعمل في الوقت الفعلي بأقل زمن استجابة."
   },
   {
-    icon: <Code2 className="w-10 h-10 text-pink-400" />,
+    icon: <Code2 className="w-6 h-6" />,
     title: "خوارزميات متطورة",
-    desc: "هندسة برمجية تعتمد على أحدث الخوارزميات لمعالجة البيانات الضخمة."
+    desc: "هندسة برمجية لمعالجة البيانات الضخمة بدقة متناهية."
   },
   {
-    icon: <ShieldCheck className="w-10 h-10 text-green-400" />,
+    icon: <ShieldCheck className="w-6 h-6" />,
     title: "أمن سيبراني",
-    desc: "حماية الأنظمة الذكية بتقنيات تشفير ومراقبة استباقية من الجيل التالي."
+    desc: "حماية استباقية للأنظمة الذكية بتقنيات تشفير الجيل القادم."
   }
 ];
 
 const Features: React.FC = () => {
   return (
-    <section className="py-24 bg-dark-800 relative">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-brand/30 to-transparent"></div>
+    <section className="py-24 bg-slate-950 relative overflow-hidden">
+      {/* Decorative Glow */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand/5 rounded-full blur-[150px] -mr-64 -mt-64"></div>
       
-      <div className="max-w-7xl mx-auto px-4">
+      <div className="max-w-6xl mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
-          <h2 className="text-4xl font-bold text-white mb-4">رؤية 2026</h2>
-          <p className="text-gray-400 max-w-2xl mx-auto">نحول الأفكار المعقدة إلى واقع رقمي ملموس باستخدام تقنيات لم يراها العالم من قبل.</p>
+          <motion.span 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-brand font-futuristic text-xs tracking-[0.3em] uppercase mb-4 block"
+          >
+            Capabilities 2026
+          </motion.span>
+          <h2 className="text-3xl md:text-5xl font-bold text-white mb-4">آفاق التكنولوجيا</h2>
+          <div className="h-1 w-20 bg-brand mx-auto rounded-full"></div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <motion.div 
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              whileHover={{ scale: 1.02 }}
-              className="bg-white/5 backdrop-blur-md border border-white/10 p-8 rounded-2xl hover:border-brand/50 transition-colors duration-300 group"
+              whileHover={{ y: -8, transition: { duration: 0.2 } }}
+              className="bg-slate-900/50 backdrop-blur-lg border border-white/5 p-8 rounded-3xl hover:border-brand/40 hover:bg-slate-900/80 transition-all duration-300 group"
             >
-              <div className="mb-6 p-4 bg-white/5 rounded-full w-fit group-hover:bg-brand/20 transition-colors duration-300">
+              <div className="mb-6 p-4 bg-brand/10 rounded-2xl w-fit text-brand group-hover:scale-110 transition-transform duration-300 shadow-[0_0_20px_rgba(0,230,153,0.1)]">
                 {feature.icon}
               </div>
-              <h3 className="text-2xl font-bold text-white mb-3 group-hover:text-brand transition-colors">{feature.title}</h3>
-              <p className="text-gray-400 leading-relaxed">{feature.desc}</p>
+              <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+              <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
             </motion.div>
           ))}
         </div>
